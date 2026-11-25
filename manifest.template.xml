@@ -51,7 +51,7 @@
           <FunctionFile resid="Taskpane.Url" />
           <ExtensionPoint xsi:type="PrimaryCommandSurface">
             <CustomTab id="Mall.Tab">
-              <Group id="Mall.Panel">
+              <Group id="Mall.Group.Panel">
                 <Label resid="Panel.Group" />
                 <Icon>
                   <bt:Image size="16" resid="Icon.Logo.16" />
@@ -90,7 +90,7 @@
                   </Action>
                 </Control>
               </Group>
-              <Group id="Mall.Sign">
+              <Group id="Mall.Group.Sign">
                 <Label resid="Sign.Group" />
                 <Icon>
                   <bt:Image size="16" resid="Icon.Logo.16" />
@@ -128,7 +128,7 @@
                   </Action>
                 </Control>
               </Group>
-              <Group id="Mall.Template">
+              <Group id="Mall.Group.Template">
                 <Label resid="Template.Group" />
                 <Icon>
                   <bt:Image size="16" resid="Icon.Logo.16" />

@@ -25,6 +25,15 @@ test("manifestet fylls i och varje knapp har texter och ikoner", () => {
   assert.notEqual(PRODUCTION_ID, DEVELOPMENT_ID);
 });
 
+test("flikens, gruppernas och knapparnas id är unika (annars underkänner Excel tillägget)", () => {
+  const ids = [...template.matchAll(/<(?:CustomTab|Group|Control)\b[^>]*\bid="([^"]+)"/g)].map(
+    (m) => m[1],
+  );
+  const duplicates = ids.filter((id, i) => ids.indexOf(id) !== i);
+  assert.deepEqual(duplicates, []);
+  assert.ok(ids.length >= 9, String(ids.length));
+});
+
 test("ikonerna som manifestet pekar på finns", () => {
   const xml = renderManifest(template, { id: PRODUCTION_ID, name: "x", url: "https://exempel.se" });
   for (const [, path] of xml.matchAll(/https:\/\/exempel\.se\/(icons\/[^"]+)"/g)) {

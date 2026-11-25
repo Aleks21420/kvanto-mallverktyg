@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Mall för Mallverktygets manifest, som talar om för Excel var tillägget finns.
+  scripts/manifest.ts fyller i {{ID}}, {{NAME}}, {{URL}} och {{ORIGIN}}: manifest.xml för
+  utveckling (localhost) och mallverktyg-manifest.xml när tillägget publiceras.
+  Ändra här, inte i de färdiga filerna.
+-->
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+           xsi:type="TaskPaneApp">
+  <Id>{{ID}}</Id>
+  <Version>0.1.0.0</Version>
+  <ProviderName>Kvanto</ProviderName>
+  <DefaultLocale>sv-SE</DefaultLocale>
+  <DisplayName DefaultValue="{{NAME}}" />
+  <Description DefaultValue="Gör om Excel-filer till byråns revisionspapper: huvud, signering, avsnitt, utseende, utskrift och mallar." />
+  <IconUrl DefaultValue="{{URL}}/icons/icon-32.png" />
+  <HighResolutionIconUrl DefaultValue="{{URL}}/icons/icon-64.png" />
+  <SupportUrl DefaultValue="{{URL}}/installera.html" />
+  <AppDomains>
+    <AppDomain>{{ORIGIN}}</AppDomain>
+  </AppDomains>
+  <Hosts>
+    <Host Name="Workbook" />
+  </Hosts>
+  <Requirements>
+    <Sets DefaultMinVersion="1.7">
+      <Set Name="ExcelApi" MinVersion="1.7" />
+    </Sets>
+  </Requirements>
+  <DefaultSettings>
+    <SourceLocation DefaultValue="{{URL}}/index.html" />
+  </DefaultSettings>
+  <!-- Panelen läser och skriver i arbetsboken. -->
+  <Permissions>ReadWriteDocument</Permissions>
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Hosts>
+      <Host xsi:type="Workbook">
+        <!-- Panelen och knapparna delar körmiljö, så att knapparna fungerar även när panelen är stängd. -->
+        <Runtimes>
+          <Runtime resid="Taskpane.Url" lifetime="long" />
+        </Runtimes>
+        <DesktopFormFactor>
+          <GetStarted>
+            <Title resid="GetStarted.Title" />
+            <Description resid="GetStarted.Description" />
+            <LearnMoreUrl resid="GetStarted.LearnMoreUrl" />
+          </GetStarted>
+          <FunctionFile resid="Taskpane.Url" />
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <CustomTab id="Mall.Tab">
+              <Group id="Mall.Panel">
+                <Label resid="Panel.Group" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.Logo.16" />
+                  <bt:Image size="32" resid="Icon.Logo.32" />
+                  <bt:Image size="80" resid="Icon.Logo.80" />
+                </Icon>
+                <Control xsi:type="Button" id="Mall.ShowPane">
+                  <Label resid="ShowPane.Label" />
+                  <Supertip>
+                    <Title resid="ShowPane.Label" />
+                    <Description resid="ShowPane.Tooltip" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.Logo.16" />
+                    <bt:Image size="32" resid="Icon.Logo.32" />
+                    <bt:Image size="80" resid="Icon.Logo.80" />
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>KvantoMallverktyg</TaskpaneId>
+                    <SourceLocation resid="Taskpane.Url" />
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="Mall.Adapt">
+                  <Label resid="Adapt.Label" />
+                  <Supertip>
+                    <Title resid="Adapt.Label" />
+                    <Description resid="Adapt.Tooltip" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.Anpassa.16" />
+                    <bt:Image size="32" resid="Icon.Anpassa.32" />
+                    <bt:Image size="80" resid="Icon.Anpassa.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>mallAnpassa</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+              <Group id="Mall.Sign">
+                <Label resid="Sign.Group" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.Logo.16" />
+                  <bt:Image size="32" resid="Icon.Logo.32" />
+                  <bt:Image size="80" resid="Icon.Logo.80" />
+                </Icon>
+                <Control xsi:type="Button" id="Mall.Prepared">
+                  <Label resid="Prepared.Label" />
+                  <Supertip>
+                    <Title resid="Prepared.Label" />
+                    <Description resid="Prepared.Tooltip" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.Upprattat.16" />
+                    <bt:Image size="32" resid="Icon.Upprattat.32" />
+                    <bt:Image size="80" resid="Icon.Upprattat.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>mallUpprattat</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="Mall.Reviewed">
+                  <Label resid="Reviewed.Label" />
+                  <Supertip>
+                    <Title resid="Reviewed.Label" />
+                    <Description resid="Reviewed.Tooltip" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.Granskat.16" />
+                    <bt:Image size="32" resid="Icon.Granskat.32" />
+                    <bt:Image size="80" resid="Icon.Granskat.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>mallGranskat</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+              <Group id="Mall.Template">
+                <Label resid="Template.Group" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.Logo.16" />
+                  <bt:Image size="32" resid="Icon.Logo.32" />
+                  <bt:Image size="80" resid="Icon.Logo.80" />
+                </Icon>
+                <Control xsi:type="Button" id="Mall.Template">
+                  <Label resid="Template.Label" />
+                  <Supertip>
+                    <Title resid="Template.Label" />
+                    <Description resid="Template.Tooltip" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.Mall.16" />
+                    <bt:Image size="32" resid="Icon.Mall.32" />
+                    <bt:Image size="80" resid="Icon.Mall.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>mallMall</FunctionName>
+                  </Action>
+                </Control>
+              </Group>
+              <Label resid="Tab.Label" />
+            </CustomTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Icon.Anpassa.16" DefaultValue="{{URL}}/icons/band/anpassa-16.png" />
+        <bt:Image id="Icon.Anpassa.32" DefaultValue="{{URL}}/icons/band/anpassa-32.png" />
+        <bt:Image id="Icon.Anpassa.80" DefaultValue="{{URL}}/icons/band/anpassa-80.png" />
+        <bt:Image id="Icon.Upprattat.16" DefaultValue="{{URL}}/icons/band/upprattat-16.png" />
+        <bt:Image id="Icon.Upprattat.32" DefaultValue="{{URL}}/icons/band/upprattat-32.png" />
+        <bt:Image id="Icon.Upprattat.80" DefaultValue="{{URL}}/icons/band/upprattat-80.png" />
+        <bt:Image id="Icon.Granskat.16" DefaultValue="{{URL}}/icons/band/granskat-16.png" />
+        <bt:Image id="Icon.Granskat.32" DefaultValue="{{URL}}/icons/band/granskat-32.png" />
+        <bt:Image id="Icon.Granskat.80" DefaultValue="{{URL}}/icons/band/granskat-80.png" />
+        <bt:Image id="Icon.Mall.16" DefaultValue="{{URL}}/icons/band/mall-16.png" />
+        <bt:Image id="Icon.Mall.32" DefaultValue="{{URL}}/icons/band/mall-32.png" />
+        <bt:Image id="Icon.Mall.80" DefaultValue="{{URL}}/icons/band/mall-80.png" />
+        <bt:Image id="Icon.Logo.16" DefaultValue="{{URL}}/icons/icon-16.png" />
+        <bt:Image id="Icon.Logo.32" DefaultValue="{{URL}}/icons/icon-32.png" />
+        <bt:Image id="Icon.Logo.80" DefaultValue="{{URL}}/icons/icon-80.png" />
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="{{URL}}/installera.html" />
+        <bt:Url id="Taskpane.Url" DefaultValue="{{URL}}/index.html" />
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="GetStarted.Title" DefaultValue="{{NAME}} är installerat" />
+        <bt:String id="Tab.Label" DefaultValue="Mallverktyg" />
+        <bt:String id="Panel.Group" DefaultValue="Mallverktyg" />
+        <bt:String id="Sign.Group" DefaultValue="Signera" />
+        <bt:String id="Template.Group" DefaultValue="Mall" />
+        <bt:String id="ShowPane.Label" DefaultValue="Visa panelen" />
+        <bt:String id="Adapt.Label" DefaultValue="Anpassa flik" />
+        <bt:String id="Prepared.Label" DefaultValue="Upprättat" />
+        <bt:String id="Reviewed.Label" DefaultValue="Granskat" />
+        <bt:String id="Template.Label" DefaultValue="Spara som mall" />
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="GetStarted.Description" DefaultValue="Öppna panelen med knappen Visa panelen på fliken Mallverktyg." />
+        <bt:String id="ShowPane.Tooltip" DefaultValue="Uppdragets uppgifter, flikarna, signering och byråns inställningar." />
+        <bt:String id="Adapt.Tooltip" DefaultValue="Gör om den aktiva fliken till byråns revisionspapper: huvud, avsnitt, utseende och utskrift. Går att göra igen utan att något läggs till två gånger." />
+        <bt:String id="Prepared.Tooltip" DefaultValue="Fyll i dina initialer och dagens datum som upprättare av den aktiva fliken." />
+        <bt:String id="Reviewed.Tooltip" DefaultValue="Fyll i dina initialer och dagens datum som granskare av den aktiva fliken." />
+        <bt:String id="Template.Tooltip" DefaultValue="Spara arbetsboken som en mall (.xltx) som nya arbetspapper börjar från." />
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>

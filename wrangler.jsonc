@@ -1,0 +1,10 @@
+// Cloudflare-inställningar för Kvanto Mallverktyg. Tillägget är bara statiska
+// filer (mappen dist) som Cloudflare levererar; det finns ingen server som tar
+// emot arbetsböcker. Ryms i Cloudflares gratisnivå.
+{
+  "name": "kvanto-mallverktyg",
+  "compatibility_date": "2026-10-01",
+  "assets": { "directory": "dist" },
+  // Gratisadressen https://kvanto-mallverktyg.<ditt-konto>.workers.dev (står i mallverktyg.json).
+  "workers_dev": true,
+}

@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Installera Kvanto Mallverktyg</title>
+    <link rel="icon" href="icons/icon-32.png" />
+    <style>
+      :root {
+        --text: #1f1f1f;
+        --muted: #5c5c5c;
+        --accent: #1f4e79;
+        --accent-dark: #163a5b;
+        --border: #dcdcdc;
+        --surface: #ffffff;
+        --background: #f4f6f9;
+        color-scheme: light;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font:
+          16px/1.55 "Segoe UI",
+          system-ui,
+          sans-serif;
+        color: var(--text);
+        background: var(--background);
+      }
+      main {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 32px 16px 48px;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 8px;
+      }
+      header img {
+        width: 48px;
+        height: 48px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 28px;
+      }
+      .lead {
+        color: var(--muted);
+        margin: 0 0 24px;
+      }
+      section {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 16px;
+      }
+      section.main {
+        border: 2px solid var(--accent);
+      }
+      h2 {
+        margin: 0 0 8px;
+        font-size: 19px;
+      }
+      ol {
+        margin: 8px 0 0;
+        padding-left: 22px;
+      }
+      li {
+        margin: 6px 0;
+      }
+      .button {
+        display: inline-block;
+        margin: 6px 0;
+        padding: 10px 18px;
+        border-radius: 6px;
+        background: var(--accent);
+        color: white;
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .button:hover {
+        background: var(--accent-dark);
+      }
+      .button.secondary {
+        background: var(--surface);
+        color: var(--accent);
+        border: 1px solid var(--accent);
+      }
+      code {
+        font-size: 14px;
+        background: #eef1f5;
+        padding: 1px 5px;
+        border-radius: 4px;
+        overflow-wrap: anywhere;
+      }
+      .note {
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .command {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        margin: 6px 0;
+      }
+      .command code {
+        flex: 1 1 280px;
+        display: block;
+        padding: 8px 10px;
+        font-size: 13px;
+        line-height: 1.4;
+        background: #1f1f1f;
+        color: #f2f2f2;
+        border-radius: 6px;
+        user-select: all;
+      }
+      .command .button {
+        margin: 0;
+        border: none;
+        font: inherit;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      kbd {
+        font: inherit;
+        font-size: 14px;
+        padding: 0 5px;
+        border: 1px solid var(--border);
+        border-bottom-width: 2px;
+        border-radius: 4px;
+        background: var(--surface);
+      }
+      details summary {
+        cursor: pointer;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <img src="icons/icon-128.png" alt="" />
+        <h1>Installera Kvanto Mallverktyg</h1>
+      </header>
+      <p class="lead">
+        Mallverktyget gör om Excel-filer till byråns revisionspapper: huvud med klient, referens
+        och signering, fasta avsnitt, byråns utseende, utskrift och mallar. Arbetsböckerna stannar
+        på din egen dator.
+      </p>
+
+      <section class="main">
+        <h2>Hela byrån på en gång (rekommenderas)</h2>
+        <p>
+          Har byrån Microsoft 365 lägger en administratör till Mallverktyget åt alla. Ingen behöver ladda
+          ner eller installera något, och Mallverktyget dyker upp i Excel av sig självt.
+        </p>
+        <ol>
+          <li>
+            Kopiera länken till Mallverktyget:
+            <div class="command">
+              <code id="manifest-url">Länken visas här.</code>
+              <button class="button" id="manifest-copy" type="button">Kopiera</button>
+            </div>
+          </li>
+          <li>
+            Gå till <strong>admin.microsoft.com</strong> → <strong>Inställningar</strong> →
+            <strong>Integrerade appar</strong> → <strong>Ladda upp anpassade appar</strong>.
+          </li>
+          <li>
+            Välj <strong>Office-tillägg</strong> och <strong>Ange länk till manifestfilen</strong>,
+            och klistra in länken.
+          </li>
+          <li>Välj vilka användare som ska få Mallverktyget och slutför.</li>
+        </ol>
+        <p class="note">
+          Mallverktyget syns sedan som en egen flik, <strong>Mallverktyg</strong>, i allas Excel,
+          oftast inom några timmar.
+        </p>
+      </section>
+
+      <section>
+        <h2>Bara för dig själv</h2>
+        <p>
+          <strong>Excel på webben:</strong> ladda ner manifestet och välj det under
+          <strong>Start</strong> → <strong>Tillägg</strong> → <strong>Fler tillägg</strong> →
+          <strong>Mina tillägg</strong> → <strong>Ladda upp mitt tillägg</strong>.
+        </p>
+        <p>
+          <a class="button secondary" href="mallverktyg-manifest.xml" download>
+            Ladda ner mallverktyg-manifest.xml
+          </a>
+        </p>
+        <p>
+          <strong>Excel för Windows:</strong> där går det oftast inte att ladda upp tillägg själv.
+          Använd i stället kommandot nedan, som lägger till Mallverktyget direkt:
+        </p>
+        <ol>
+          <li>
+            Kopiera kommandot:
+            <div class="command">
+              <code id="install-command">Kommandot visas här.</code>
+              <button class="button" id="install-copy" type="button">Kopiera</button>
+            </div>
+          </li>
+          <li>
+            Tryck på <kbd>Windows-tangenten</kbd> + <kbd>R</kbd>, skriv <code>cmd</code> och tryck
+            <kbd>Enter</kbd>.
+          </li>
+          <li>Högerklicka i det svarta fönstret för att klistra in, och tryck <kbd>Enter</kbd>.</li>
+          <li>
+            Starta om Excel. Mallverktyget finns på en egen flik, <strong>Mallverktyg</strong>,
+            längst till höger.
+          </li>
+        </ol>
+        <p class="note">
+          Har du installerat Mallverktyget tidigare men saknar fliken <strong>Mallverktyg</strong>: kör
+          kommandot igen och starta om Excel. Nya knappar i Excel kräver det; allt annat uppdateras
+          av sig självt.
+        </p>
+        <p class="note">
+          Kommandot hämtar bara Mallverktygets manifest (en liten textfil) och talar om för Excel var det
+          finns. Inga administratörsrättigheter behövs, och inget installeras utanför Excel.
+        </p>
+      </section>
+
+      <section>
+        <h2>Mac</h2>
+        <ol>
+          <li>
+            <a class="button secondary" href="mallverktyg-manifest.xml" download>
+              Ladda ner mallverktyg-manifest.xml
+            </a>
+          </li>
+          <li>
+            I Finder: välj <strong>Gå</strong> → <strong>Gå till mapp</strong> och skriv
+            <code>~/Library/Containers/com.microsoft.Excel/Data/Documents/wef</code>. Finns mappen
+            <code>wef</code> inte, skapa den.
+          </li>
+          <li>Lägg filen i mappen och starta om Excel.</li>
+          <li>Mallverktyget finns på en egen flik, <strong>Mallverktyg</strong>.</li>
+        </ol>
+      </section>
+
+      <p class="note">
+        Uppdateringar kommer automatiskt. Arbetsböckerna läses och ändras bara på den egna datorn
+        och skickas aldrig någonstans.
+      </p>
+
+      <details>
+        <summary>Ta bort Mallverktyget</summary>
+        <p>Lades Mallverktyget till med kommandot: kör det här på samma sätt och starta om Excel.</p>
+        <div class="command">
+          <code id="uninstall-command">Kommandot visas här.</code>
+          <button class="button secondary" id="uninstall-copy" type="button">Kopiera</button>
+        </div>
+        <p>
+          Laddades Mallverktyget upp under Mina tillägg: högerklicka på det där och välj
+          <strong>Ta bort</strong>. Lades det till av administratören tas det bort i Microsoft
+          365-administrationen.
+        </p>
+      </details>
+    </main>
+    <script type="module" src="installera.js"></script>
+  </body>
+</html>

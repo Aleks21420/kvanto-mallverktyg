@@ -1,0 +1,34 @@
+{
+  "name": "kvanto-mallverktyg",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/manifest.ts && vite",
+    "dev:browser": "vite --mode browser",
+    "build": "tsc && vite build && node scripts/install-files.ts",
+    "test": "node --test \"src/**/*.test.ts\" \"scripts/*.test.ts\"",
+    "typecheck": "tsc",
+    "certs": "office-addin-dev-certs install",
+    "manifest": "node scripts/manifest.ts",
+    "validate": "npx --yes office-addin-manifest@3.0.1 validate manifest.xml",
+    "ikoner": "python3 scripts/make-icons.py"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "@types/office-js": "^1.0.615",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "office-addin-dev-certs": "^3.0.1",
+    "typescript": "^5.8.3",
+    "vite": "^8.3.4"
+  },
+  "engines": {
+    "node": ">=22.18"
+  }
+}

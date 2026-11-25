@@ -18,6 +18,10 @@ export function ProfileView({ profile, onChange }: Props) {
   const file = useRef<HTMLInputElement>(null);
   const [message, setMessage] = useState("");
   const [confirmReset, setConfirmReset] = useState(false);
+  /** Senast valda bakgrund, så att den kommer tillbaka när bakgrunden slås på igen. */
+  const [lastBackground, setLastBackground] = useState(
+    profile.background || DEFAULT_PROFILE.background,
+  );
   const set = (patch: Partial<Profile>) => onChange({ ...profile, ...patch });
   const setMarking = (i: number, patch: Partial<Profile["markings"][number]>) =>
     set({ markings: profile.markings.map((m, j) => (j === i ? { ...m, ...patch } : m)) });
@@ -102,8 +106,26 @@ export function ProfileView({ profile, onChange }: Props) {
               onChange={(e) => set({ inputColor: e.target.value.toUpperCase() })}
             />
           </label>
+          <label className="field narrow">
+            Bakgrund
+            <input
+              type="color"
+              value={profile.background || lastBackground}
+              disabled={!profile.background}
+              onChange={(e) => {
+                setLastBackground(e.target.value.toUpperCase());
+                set({ background: e.target.value.toUpperCase() });
+              }}
+            />
+          </label>
           <div className="sample" aria-hidden style={{ fontFamily: profile.font }}>
-            <span style={{ color: profile.accent, fontWeight: 600 }}>
+            <span
+              style={{
+                color: profile.accent,
+                fontWeight: 600,
+                background: profile.background || undefined,
+              }}
+            >
               {profile.firm || "Byrån"}
             </span>
             <span
@@ -117,6 +139,15 @@ export function ProfileView({ profile, onChange }: Props) {
             <span style={{ background: profile.inputColor }}>Fyll i</span>
           </div>
         </div>
+        <label className="check">
+          <input
+            type="checkbox"
+            checked={!!profile.background}
+            onChange={(e) => set({ background: e.target.checked ? lastBackground : "" })}
+          />
+          Bakgrund i det Mallverktyget lägger till (huvud, slutsats och markeringar), så att det
+          ursprungliga innehållet syns tydligt
+        </label>
         <label className="field">
           Tal utan format
           <select

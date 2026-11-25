@@ -88,6 +88,7 @@ async function applySteps(context: Excel.RequestContext, sheet: Excel.Worksheet,
         if (s.size) range.format.font.size = s.size;
         if (s.bold !== undefined) range.format.font.bold = s.bold;
         if (s.color) range.format.font.color = s.color;
+        if (s.clearFill) range.format.fill.clear();
         if (s.fill) range.format.fill.color = s.fill;
         if (s.horizontal) range.format.horizontalAlignment = s.horizontal;
         if (s.borderBottom) {

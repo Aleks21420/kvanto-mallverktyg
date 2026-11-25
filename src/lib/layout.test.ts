@@ -113,6 +113,32 @@ test("en flik får huvud, utseende, slutsats och markeringar", () => {
   assert.equal(sheet.print?.rightFooter, "Sida &P av &N");
 });
 
+test("bakgrund i Mallverktygets delar, inte i originalets innehåll", () => {
+  const { sheet } = workbook();
+  sheet.apply(planSheet(sheet.snapshot(), DEFAULT_PROFILE, OPTIONS));
+  const H = HEADER_ROWS;
+  const bg = DEFAULT_PROFILE.background;
+  assert.equal(sheet.get(1, 0)!.style.fill, bg, "huvudet");
+  assert.equal(sheet.get(7, 3)!.style.fill, bg, "linjen under huvudet");
+  assert.equal(sheet.get(8, 0)?.style.fill, undefined, "tom rad före innehållet");
+  assert.equal(
+    sheet.get(0, 6)!.style.fill,
+    DEFAULT_PROFILE.inputColor,
+    "referensen behåller sin färg",
+  );
+  assert.equal(sheet.get(H + 1, 0)!.style.fill, undefined, "originalets innehåll");
+  assert.equal(sheet.get(H + 7, 0)!.style.fill, bg, "slutsatsen");
+  assert.equal(sheet.get(H + 7, 1)!.style.fill, DEFAULT_PROFILE.inputColor, "slutsatsens ruta");
+  assert.equal(sheet.get(H + 14, 1)!.style.fill, bg, "sista markeringen");
+  // Byrån stänger av bakgrunden: anpassa igen tar bort den.
+  sheet.apply(planSheet(sheet.snapshot(), { ...DEFAULT_PROFILE, background: "" }, OPTIONS));
+  assert.equal(sheet.get(1, 0)!.style.fill, undefined);
+  assert.equal(sheet.get(H + 7, 0)!.style.fill, undefined);
+  assert.equal(sheet.get(0, 6)!.style.fill, DEFAULT_PROFILE.inputColor);
+  assert.equal(cleanProfile({ background: "" }).background, "");
+  assert.equal(cleanProfile({ background: "grön" }).background, DEFAULT_PROFILE.background);
+});
+
 test("anpassa igen: inget läggs till två gånger och det ifyllda står kvar", () => {
   const { sheet } = workbook();
   sheet.apply(planSheet(sheet.snapshot(), DEFAULT_PROFILE, OPTIONS));

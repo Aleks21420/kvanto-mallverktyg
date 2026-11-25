@@ -57,6 +57,8 @@ export interface Style {
   bold?: boolean;
   color?: string;
   fill?: string;
+  /** Ta bort bakgrundsfärgen (före andra färger i samma steg). */
+  clearFill?: boolean;
   borderBottom?: { color: string; weight: "Thin" | "Medium" };
   horizontal?: "Left" | "Center" | "Right";
   numberFormat?: string;
@@ -288,12 +290,16 @@ export function planSheet(snapshot: Snapshot, profile: Profile, options: Options
   if (!updating) {
     steps.push({ op: "values", address: cell(4, 0), values: [[snapshot.sheetName]] });
   }
+  // Mallverktygets delar får byråns bakgrund (eller ingen), före rutorna som
+  // fylls i, så att de behåller sin egen färg.
+  const background: Style = profile.background ? { fill: profile.background } : { clearFill: true };
   steps.push(
     {
       op: "style",
       address: area(0, 0, H - 1, last),
       style: { font: profile.font, size: profile.fontSize },
     },
+    { op: "style", address: area(0, 0, H - 2, last), style: background },
     {
       op: "style",
       address: cell(0, 0),
@@ -371,7 +377,16 @@ export function planSheet(snapshot: Snapshot, profile: Profile, options: Options
   // Slutsats och markeringar, efter innehållet.
   const conclusionRow =
     conclusionAt ?? (contentBottom !== null ? Math.max(contentBottom + 2, H) : H);
+  const legendTop = conclusionRow + 2;
+  const legend = [
+    ["Markeringar", ""],
+    ...profile.markings.filter((m) => m.symbol.trim()).map((m) => [m.symbol, m.meaning]),
+  ];
+  const legendBottom = legendTop + legend.length - 1;
+  // De gamla markeringarna bort först (de kan ha varit fler).
+  if (snapshot.names.markings) steps.push({ op: "clear", address: snapshot.names.markings });
   steps.push(
+    { op: "style", address: area(conclusionRow, 0, legendBottom, last), style: background },
     { op: "values", address: cell(conclusionRow, 0), values: [[profile.sections.conclusion]] },
     {
       op: "style",
@@ -385,13 +400,6 @@ export function planSheet(snapshot: Snapshot, profile: Profile, options: Options
     },
     { op: "name", name: NAMES.conclusion, address: cell(conclusionRow, 1) },
   );
-  const legendTop = conclusionRow + 2;
-  if (snapshot.names.markings) steps.push({ op: "clear", address: snapshot.names.markings });
-  const legend = [
-    ["Markeringar", ""],
-    ...profile.markings.filter((m) => m.symbol.trim()).map((m) => [m.symbol, m.meaning]),
-  ];
-  const legendBottom = legendTop + legend.length - 1;
   steps.push(
     { op: "values", address: area(legendTop, 0, legendBottom, 1), values: legend },
     {

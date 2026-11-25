@@ -167,7 +167,8 @@ export class MemorySheet {
         case "style":
           for (const { row, col } of cellsIn(step.address)) {
             const target = this.ensure(row, col);
-            const { numberFormat, ...style } = step.style;
+            const { numberFormat, clearFill, ...style } = step.style;
+            if (clearFill) delete target.style.fill;
             target.style = { ...target.style, ...style };
             if (numberFormat) target.format = numberFormat;
           }

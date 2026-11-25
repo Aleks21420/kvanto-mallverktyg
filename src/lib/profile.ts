@@ -15,6 +15,11 @@ export interface Profile {
   accent: string;
   /** Bakgrund för rutor som ska fyllas i, som #rrggbb. */
   inputColor: string;
+  /**
+   * Bakgrund i det som Mallverktyget lägger till (huvudet, slutsatsen och
+   * markeringarna), så att originalets innehåll syns tydligt. Tomt = ingen.
+   */
+  background: string;
   /** Talformat för tal som saknar format: heltal, två decimaler eller efter talet. */
   numbers: "heltal" | "decimaler" | "auto";
   /** Rubrikerna för avsnitten. */
@@ -34,6 +39,7 @@ export const DEFAULT_PROFILE: Profile = {
   fontSize: 11,
   accent: "#1F4E79",
   inputColor: "#FFF5CC",
+  background: "#EAF4EA",
   numbers: "auto",
   sections: { purpose: "Syfte", work: "Utfört arbete", conclusion: "Slutsats" },
   markings: [
@@ -78,6 +84,8 @@ export function cleanProfile(input: unknown): Profile {
     fontSize: Number.isFinite(size) && size >= 6 && size <= 24 ? Math.round(size) : d.fontSize,
     accent: isColor(p.accent) ? p.accent.toUpperCase() : d.accent,
     inputColor: isColor(p.inputColor) ? p.inputColor.toUpperCase() : d.inputColor,
+    background:
+      p.background === "" ? "" : isColor(p.background) ? p.background.toUpperCase() : d.background,
     numbers: p.numbers === "heltal" || p.numbers === "decimaler" ? p.numbers : "auto",
     sections: {
       purpose: text(sections.purpose, d.sections.purpose, 40).trim() || d.sections.purpose,
